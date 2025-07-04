@@ -2,34 +2,29 @@ import React, { useState } from "react";
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
-
   return (
     <div>
       <nav className="fixed top-0 left-0 w-full bg-white shadow z-50 p-2">
-        {/* Flex container to align image, title, and menu horizontally */}
-        <div className="flex justify-between items-center">
-          {/* Left section: Image + Title */}
-          <div className="flex items-center space-x-3">
+        <div className=" h-12 text-left items-center">
+          <div className="flex justify-center items-center space-x-3">
             <img
-              src="/pic.png" // Make sure pic.png is in public folder
+              src="/final.png" 
               alt="Logo"
-              className="h-40 w-40 rounded-full"
+              className="h-12 w-12 "
             />
-            <h1 className="text-2xl text-blue-400 font-bold">PainEase</h1>
+            <h1 className="text-2xl text-blue-400 font-bold text-center">PainEase</h1>
           </div>
 
-          {/* Right section: Menu Button */}
-          <div className="relative">
+          <div className="relative pd-5">
             <button
               onClick={() => setOpen(!open)}
-              className="text-white bg-blue-500 px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none"
+              className="fixed top-3 text-white bg-blue-500 px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none"
             >
               Menu
             </button>
 
-            {/* Dropdown */}
             {open && (
-              <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">
+              <div className="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">
                 <a
                   href="#item1"
                   className="block px-4 py-2 text-gray-700 hover:bg-blue-100"

@@ -6,7 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-
+.DS_Store 
+backend/.DS_Store 
 backend/dist
 backend/node_modules
 backend/.env

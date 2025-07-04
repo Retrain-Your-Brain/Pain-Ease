@@ -1,27 +1,20 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import axios from 'axios';
-// import { useMutation } from "@tanstack/react-query";
-// import { data } from "../user";
 
 const PromptComponent = () => {
   const [input, setInput] = useState("");
 
-  // const mutation = useMutation({
-  //   mutationFn: data,
-  // });
-
-  const handleClick = async () => {
+  const handleClick = useCallback(async () => {
     try {
-      const response = await axios.post('http://localhost:5000/prompt', {
+      await axios.post('http://localhost:5000/prompt', {
         prompt: input
       });
-      console.log("Response:", response.data);
-      // You can clear input or do other stuff here
       setInput("");
+
     } catch (error) {
       console.error("Error sending prompt:", error);
     }
-  };
+  },[]);
 
   return (
     <div>
