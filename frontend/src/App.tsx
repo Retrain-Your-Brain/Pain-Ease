@@ -1,29 +1,25 @@
 
 import { Provider } from "react-redux";
 import "./App.css";
-<<<<<<< Updated upstream
-import { Navbar } from "./Components/Navbar/Navbar";
+import Home from "./Components/home/Home";
 import PromptComponent from './Components/Prompt'
 import { store } from "./store/store";
 import { DescriptionAlerts } from "./Components/Alert/AlertMessage";
-=======
->>>>>>> Stashed changes
+import {BrowserRouter as Router, Routes,Route} from 'react-router-dom'
+import Register  from  "./Components/Register/Register";
 
-import PromptComponent from './Components/Prompt'
-import Home from "./Components/home/Home";
 function App() {
   return (
-<<<<<<< Updated upstream
     <Provider store={store}>
-      <h1>Prompt Sender</h1>
-      <Navbar />
-=======
-    <>
-
-     <Home/>
->>>>>>> Stashed changes
+      <Router>
+      <Routes>
+      <Route path='/' element={<Home/>} />
+      <Route path='/register' element={<Register/>} />
       <PromptComponent/>
+
       <DescriptionAlerts />
+      </Routes>
+      </Router>
     </Provider>
   );
 }
