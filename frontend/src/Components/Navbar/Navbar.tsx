@@ -24,31 +24,20 @@ const Navbar: React.FC = () => {
             </button>
 
             {open && (
-              <div className="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">
-                <a
-                  href="#item1"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
+              <div className="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">\
+                <Select<keyof typeof SideMenuOptions>
+                  label="Option"
+                  value={sideMenuOption}
+                  onChange={handleSideMenuChange}
                 >
-                  Track Progress
-                </a>
-                <a
-                  href="#item2"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-                >
-                  Customize Plan
-                </a>
-                <a
-                  href="#item3"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-                >
-                  Rewards
-                </a>
-                <a
-                  href="#item4"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-                >
-                  Weekly Report
-                </a>
+                  {
+                    (Object.keys(SideMenuOptions) as Array<keyof typeof SideMenuOptions>).map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {SideMenuOptions[option]}
+                      </MenuItem>
+                    ))
+                  }
+                </Select>
               </div>
             )}
           </div>
