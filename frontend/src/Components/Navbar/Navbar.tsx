@@ -50,30 +50,6 @@ export function Navbar() {
                     ))
                   }
                 </Select>
-                {/* <a
-                  href="#item1"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-                >
-                  Track Progress
-                </a>
-                <a
-                  href="#item2"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-                >
-                  Customize Plan
-                </a>
-                <a
-                  href="#item3"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-                >
-                  Rewards
-                </a>
-                <a
-                  href="#item4"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-                >
-                  Weekly Report
-                </a> */}
               </div>
             )}
           </div>
