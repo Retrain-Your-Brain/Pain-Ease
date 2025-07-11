@@ -1,7 +1,19 @@
 import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { MenuItem, Select, type SelectChangeEvent } from "@mui/material";
+import { SideMenuOptions } from "../../store/types";
+import { changeSideMenu } from "../../store/appSlice";
 
-const Navbar: React.FC = () => {
+export function Navbar() {
   const [open, setOpen] = useState(false);
+  const sideMenuOption = useAppSelector((state) => state.app.sideMenuOption);
+  const dispatch = useAppDispatch();
+
+  const handleSideMenuChange = (event: SelectChangeEvent<keyof typeof SideMenuOptions>) => {
+    const newOption = event.target.value;
+    dispatch(changeSideMenu(newOption));
+  }
+
   return (
     <div>
       <nav className="fixed top-0 left-0 w-full bg-white shadow z-50 p-2">
@@ -24,8 +36,21 @@ const Navbar: React.FC = () => {
             </button>
 
             {open && (
-              <div className="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">
-                <a
+              <div className="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">\
+                <Select<keyof typeof SideMenuOptions>
+                  label="Option"
+                  value={sideMenuOption}
+                  onChange={handleSideMenuChange}
+                >
+                  {
+                    (Object.keys(SideMenuOptions) as Array<keyof typeof SideMenuOptions>).map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {SideMenuOptions[option]}
+                      </MenuItem>
+                    ))
+                  }
+                </Select>
+                {/* <a
                   href="#item1"
                   className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
                 >
@@ -48,7 +73,7 @@ const Navbar: React.FC = () => {
                   className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
                 >
                   Weekly Report
-                </a>
+                </a> */}
               </div>
             )}
           </div>
@@ -57,5 +82,3 @@ const Navbar: React.FC = () => {
     </div>
   );
 };
-
-export default Navbar;
