@@ -1,55 +1,48 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { DescriptionAlerts } from "../Alert/AlertMessage";
-import { registerApi } from "../../user";
+import { LoginAPI } from "../../user";
 import { useAppDispatch } from "../../store/store";
 import { addError } from "../../store/errorSlice";
 import Public from "../Navbar/PublicNavbar";
+import { loginAction } from "../../store/userSlice";
 
 const validationSchema = Yup.object({
-  username: Yup.string().required("Username is required"),
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
   password: Yup.string()
     .min(4, "Password must be atleast 8 characters long")
     .required("Password is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Password must match")
-    .required("Confirming your password is required"),
 });
 
-export default function Register() {
+export default function Login() {
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
-      username: "",
-      confirmPassword: "", // Added confirmPassword to match the validation schema
     },
     validationSchema,
-
-    onSubmit: async (values) => {
-      try {
-        await registerApi({
-          username: values.username,
+    onSubmit:(values) => {
+      LoginAPI({
           email: values.email,
           password: values.password,
-        });
-        navigate("/login");
-      } catch (error: any) {
+        }).then((data)=>{
+            dispatch(loginAction(values))
+            localStorage.setItem("user",JSON.stringify(data))
+            navigate("/profile");
+        }).catch ((error: any) =>{
         const message = error.response.data.message;
         dispatch(addError(message));
-      }
+      })
     },
   });
   return (
     <div>
       <Public />
-      <DescriptionAlerts />
 
       <div className="mt-30 max-w-md mx-auto h-auto bg-white p-6 rounded-xl shadow-lg  border border-gray-200">
         <form onSubmit={formik.handleSubmit} className=" ">
@@ -57,22 +50,8 @@ export default function Register() {
             <div>
               <h1 className="font-semibold text-black-800 text-center text-2xl">
                 {" "}
-                Sign Up
+                Login{" "}
               </h1>
-              <p className="mt-3"> Join our community now </p>
-              <input
-                type="username"
-                {...formik.getFieldProps("username")}
-                placeholder="  Username"
-                className="border-neutral-300 rounded border mr-50 h-10 mt-8 w-full pl-1"
-              ></input>
-              {formik.touched.username && formik.errors.username && (
-                <span className="text-xs text-red-500">
-                  {formik.errors.username}
-                </span>
-              )}
-            </div>
-            <div>
               <input
                 type="email"
                 {...formik.getFieldProps("email")}
@@ -98,23 +77,8 @@ export default function Register() {
                 </span>
               )}
             </div>
-            <div>
-              <input
-                type="password"
-                {...formik.getFieldProps("confirmPassword")}
-                placeholder="  Confirm Password"
-                className="border-neutral-300 rounded border mr-50 h-10 mt-8 w-full pl-1"
-              ></input>
-              {formik.touched.confirmPassword &&
-                formik.errors.confirmPassword && (
-                  <span className="text-xs text-red-500">
-                    {formik.errors.confirmPassword}
-                  </span>
-                )}
-            </div>
-
             <button className="text-center text-white font-bold rounded mt-8 mr-85  h-10 w-full bg-gradient-to-tr from-blue-500 to-teal-500 opacity-200  ">
-              Register
+              Login
             </button>
           </div>
         </form>

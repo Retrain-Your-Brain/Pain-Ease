@@ -1,15 +1,22 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { ExercisePlannerResponse } from "./DataTypes";
-
+import dotenv from "dotenv";
+dotenv.config();
+const url = process.env.URL || "";
 const app = express();
+const userRouter= require('../routes/UserRouter')
 const mongoose=require('mongoose')
 app.use(cors());
 
+mongoose.connect(url).then(()=>console.log("MongoDB connected")).catch((err:any)=>console.log(err))
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+app.use(express.json());
+app.use('/',userRouter)
 
 app.post("/prompt", (req: Request, res: Response) => {
   // To-do: Make call to ChatGpt when implemented.
@@ -40,4 +47,7 @@ app.post("/prompt", (req: Request, res: Response) => {
         - Consult your doctor or PT if you have serious back issues.
         Be gentle and mindful. Happy stretching!`
   } as ExercisePlannerResponse).json();
+
+
+ 
 });

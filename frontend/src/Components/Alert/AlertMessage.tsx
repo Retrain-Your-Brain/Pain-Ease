@@ -14,7 +14,7 @@ export function DescriptionAlerts() {
         <div>
             <Stack sx={{ width: '100%' }} spacing={2}>
             { messages.map ((message,index)=> (
-                <Alert severity="error" onClose={() => handleClose(index)}>
+                <Alert severity="error"  key={index}  onClose={() => handleClose(index)} className='mt-50'>
                     <AlertTitle>Error</AlertTitle>
                    {message}
                 </Alert>

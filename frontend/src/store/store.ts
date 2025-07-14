@@ -3,11 +3,13 @@ import { AppSliceReducer } from "./appSlice";
 import { useSelector, useDispatch } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 import { errorSliceReducer } from "./errorSlice";
+import { userReducer } from "./userSlice";
 
 export const store = configureStore({
     reducer: {
         app: AppSliceReducer,
         error: errorSliceReducer,
+        user:userReducer,
     }
 });
 
