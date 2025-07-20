@@ -3,7 +3,7 @@ import cors from "cors";
 import { ExercisePlannerResponse } from "./DataTypes";
 
 const app = express();
-
+const mongoose=require('mongoose')
 app.use(cors());
 
 const PORT = process.env.PORT || 5000;

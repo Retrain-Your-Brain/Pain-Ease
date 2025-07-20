@@ -1,18 +1,39 @@
 
 import { Provider } from "react-redux";
 import "./App.css";
+<<<<<<< HEAD
 import { Navbar } from "./Components/Navbar/Navbar";
 import PromptComponent from './Components/Prompt'
 import { store } from "./store/store";
 import { DescriptionAlerts } from "./Components/Alert/AlertMessage";
+=======
+import Home from "./Components/home/Home";
+import PromptComponent from './Components/Prompt'
+import { store } from "./store/store";
+import { DescriptionAlerts } from "./Components/Alert/AlertMessage";
+import {BrowserRouter as Router, Routes,Route} from 'react-router-dom'
+import Register  from  "./Components/Register/Register";
+>>>>>>> origin/main
 
 function App() {
   return (
     <Provider store={store}>
+<<<<<<< HEAD
       <h1>Prompt Sender</h1>
       <Navbar />
       <PromptComponent/>
       <DescriptionAlerts />
+=======
+      <Router>
+      <Routes>
+      <Route path='/' element={<Home/>} />
+      <Route path='/register' element={<Register/>} />
+      <PromptComponent/>
+
+      <DescriptionAlerts />
+      </Routes>
+      </Router>
+>>>>>>> origin/main
     </Provider>
   );
 }
