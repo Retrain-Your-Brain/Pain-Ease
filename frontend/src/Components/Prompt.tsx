@@ -1,20 +1,19 @@
 import { useCallback, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 const PromptComponent = () => {
   const [input, setInput] = useState("");
 
   const handleClick = useCallback(async () => {
     try {
-      await axios.post('http://localhost:5000/prompt', {
-        prompt: input
+      await axios.post("http://localhost:5000/prompt", {
+        prompt: input,
       });
       setInput("");
-
     } catch (error) {
       console.error("Error sending prompt:", error);
     }
-  },[]);
+  }, []);
 
   return (
     <div>

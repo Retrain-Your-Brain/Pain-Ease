@@ -6,6 +6,7 @@ import { useAppDispatch } from "../../store/store";
 import { addError } from "../../store/errorSlice";
 import Public from "../Navbar/PublicNavbar";
 import { loginAction } from "../../store/userSlice";
+import { DescriptionAlerts } from "../Alert/AlertMessage";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -26,24 +27,28 @@ export default function Login() {
       password: "",
     },
     validationSchema,
-    onSubmit:(values) => {
+    onSubmit: (values) => {
       LoginAPI({
-          email: values.email,
-          password: values.password,
-        }).then((data)=>{
-            dispatch(loginAction(values))
-            localStorage.setItem("user",JSON.stringify(data))
-            navigate("/profile");
-        }).catch ((error: any) =>{
-        const message = error.response.data.message;
-        dispatch(addError(message));
+        email: values.email,
+        password: values.password,
       })
+        .then((data) => {
+          dispatch(loginAction(data));
+          console.log(data)
+          localStorage.setItem("user", JSON.stringify(data));
+          localStorage.setItem("token",data.token);
+          navigate("/");
+        })
+        .catch((error: any) => {
+          const message = error.response.data.message;
+          dispatch(addError(message));
+        });
     },
   });
   return (
     <div>
       <Public />
-
+ <DescriptionAlerts />
       <div className="mt-30 max-w-md mx-auto h-auto bg-white p-6 rounded-xl shadow-lg  border border-gray-200">
         <form onSubmit={formik.handleSubmit} className=" ">
           <div>

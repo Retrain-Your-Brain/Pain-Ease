@@ -1,32 +1,43 @@
-import { useState } from "react"
+import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../store/store";
+import { logoutAction } from "../../store/userSlice";
 
 const navigation = [
-    { name: 'Customize Plan', href: '#' },
-    { name: 'Track Progress', href: '#' },
-    { name: 'Online Community', href: '#' },
-    { name: 'Rewards', href: '#' },
-  ]
+  { name: "Customize Plan", href: "#" },
+  { name: "Track Progress", href: "#" },
+  { name: "Online Community", href: "#" },
+  { name: "Profile", href: "/profile" },
+];
 
+  
 export default function Private() {
-const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const logout  = useAppSelector((state) => state.user.user);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate=useNavigate()
+  const dispatch=useDispatch()
+  
+  const handleClick=()=>{
+    dispatch(logoutAction())
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+  }
 
-    return(
-       
-        <div>
-                   <header className="absolute inset-x-0 top-0 z-50">
-        <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
+  return (
+    <div>
+      <header className="absolute inset-x-0 top-0 z-50">
+        <nav
+          aria-label="Global"
+          className="flex items-center justify-between p-6 lg:px-8"
+        >
           <div className="flex lg:flex-1">
-
             <a href="#" className="-m-1.5 p-1.5">
               <div className="flex justify-center items-center space-x-3">
-             <img
-              src="/final.png" 
-               alt="Logo"
-              className="h-20"
-            />
-          </div>
+                <img src="/final.png" alt="Logo" className="h-20" />
+              </div>
             </a>
           </div>
           <div className="flex lg:hidden">
@@ -34,30 +45,36 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            >  
-              
+            >
               <Bars3Icon aria-hidden="true" className="size-6" />
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-900">
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-sm/6 font-semibold text-gray-900"
+              >
                 {item.name}
               </a>
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm/6 font-semibold text-gray-900">
-              Log in 
+            <a href="/dashboard" className="text-sm/6 font-semibold text-gray-900" onClick={handleClick}>
+              Log out
             </a>
           </div>
         </nav>
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
+        <Dialog
+          open={mobileMenuOpen}
+          onClose={setMobileMenuOpen}
+          className="lg:hidden"
+        >
           <div className="fixed inset-0 z-50" />
           <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
-              </a>
+              <a href="#" className="-m-1.5 p-1.5"></a>
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
@@ -80,19 +97,12 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
                     </a>
                   ))}
                 </div>
-                <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    Logout
-                  </a>
-                </div>
+              
               </div>
             </div>
           </DialogPanel>
         </Dialog>
       </header>
-        </div>
-    )
+    </div>
+  );
 }

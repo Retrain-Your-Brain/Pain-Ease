@@ -1,123 +1,154 @@
-import { useFormik } from "formik";
-import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import { DescriptionAlerts } from "../Alert/AlertMessage";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { registerApi } from "../../user";
-
-import { useSelector } from "react-redux";
-import { useAppSelector } from "../../store/store";
+import { useState } from "react";
+import axios from "axios";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { addError } from "../../store/errorSlice";
 import Private from "../Navbar/PrivateNavbar";
-
-// const validationSchema= Yup.object({
-//     username:Yup.string().required("Username is required"),
-//     email:Yup.string().email("Invalid email address").required("Email is required"),
-//     password: Yup.string().min(8,"Password must be atleast 8 characters long").required("Password is required"),
-//     confirmPassword:Yup.string().oneOf([Yup.ref("password")],"Password must match").required("Confirming your password is required"),
-// })
+import { DescriptionAlerts } from "../Alert/AlertMessage";
 
 export default function Profile() {
-    const user = useAppSelector((state)=> state.user.user);
-    // const formik=useFormik({
-    //     initialValues:{
-    //         email:"",
-    //         password:"",
-    //         username:"",
-    //         confirmPassword:"", // Added confirmPassword to match the validation schema
-    //     },
-    //     validationSchema,
-    //     onSubmit:handleClick
-    //     }
-    // )
-    return (
-<div>
-        <Private/>
-{/*  two sections */}
-<div>
-<div className="mt-50" >
+  const user = useAppSelector((state) => state.user.user);
+  const dispatch = useAppDispatch();
+  const [email, setEmail] = useState(user?.user?.email || "");
+  const [username, setUsername] = useState(user?.user?.username || "");
+  const [success, setSuccess] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
-            <div>
-            <h1 className="font-semibold text-black-800  text-2xl"> Account Info</h1>
+  
+  const handleClick = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        "http://localhost:5000/update",
+        { email, username },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setSuccess("Profile updated successfully!");
+      return response.data;
+    } catch (err: any) {
+      const message = err.message || "Something went wrong.";
+      dispatch(addError(message));
+      setSuccess("");
+    }
+  };
+
+  const handleButton = async (password: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        "http://localhost:5000/password",
+        { newPassword: password },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setMessage("Password updated successfully!");
+      setPassword("");
+      return response.data;
+    } catch (err: any) {
+      const message = err.message || "Something went wrong.";
+      dispatch(addError(message));
+      setMessage("");
+    }
+  };
+
+  return (
+    <div className="  bg-gradient-to-br from-blue-100 to-white pt-24 h-auto  -ml-30 -mr-30 w-screen mt-20 ">
+      <Private />
+      <DescriptionAlerts />
+      <div className="max-w-3xl mx-auto space-y-12">
+
+        {/* Account Info Section */}
+        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">Account Info</h1>
+          <div className="space-y-4">
             <input
-            type="text"
-            defaultValue={user}
-            placeholder="username"
-            className="border-neutral-300 rounded border mr-50 h-10 mt-8 w-full pl-1 text-center"
-            >
-            </input>
-            
-            </div>
-            <div>
-           
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
             <input
-            type="email"
-            defaultValue={user}
-            placeholder=" Email" 
-            className="border-neutral-300 rounded border mr-50 h-10 mt-8 w-full text-center pl-1"
-            >
-            </input>
-            </div>
-            
-        
-
-
-            </div>
-
-      <div className="mt-30 max-w-md mx-auto h-auto bg-white p-6 rounded-xl shadow-lg  border border-gray-200">
-        
-        
-        <form >
-            <div>
-            <div>
-            <h1 className="font-semibold text-black-800  text-2xl"> Update Profile</h1>
-            <input
-            type="username"
-            placeholder="  Username" 
-            className="border-neutral-300 rounded border mr-50 h-10 mt-8 w-full pl-1"
-            >
-            </input>
-            
-            </div>
-            <div>
-          
-            <input
-            type="email"
-            placeholder=" Email" 
-            className="border-neutral-300 rounded border mr-50 h-10 mt-8 w-full pl-1"
-            >
-            </input>
-            </div>
-            
-        
-        <button className="text-center text-white font-bold rounded mt-8   h-10 w-full bg-gradient-to-tr from-blue-500 to-teal-500 opacity-200  ">
-            Save Changes
-        </button>
-
-            </div>
-        </form>
-      </div>
-
-      <div className="mt-15  max-w-md mx-auto">
-        <h1 className="font-semibold text-black-800 ">Change Your Password</h1>
-        <div className="gap-y-2">
-            <h1 className="text-black-800  mr-73 mt-8"> New Password</h1>
-            <input
-            type="password"
-            placeholder=" Enter new Password" 
-            className="border-neutral-300 rounded border w-100 h-10  mt-3   pl-1"
-            >
-            </input>
-            
-           
-
-             
-        <button className="text-center text-white font-bold rounded mt-8   h-10 w-100 bg-blue-500 ">
-            Update new password
-        </button>
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
         </div>
+
+        {/* Update Profile Section */}
+        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            handleClick();
+          }}>
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">Update Profile</h1>
+            {success && (
+              <div className="text-green-600 font-semibold mb-4">{success}</div>
+            )}
+            <div className="space-y-4">
+              <input
+                type="text"
+                
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              <input
+                type="text"
+               
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-tr from-blue-500 to-teal-500 text-white font-bold py-2 rounded-md hover:opacity-90 transition"
+              >
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* Change Password Section */}
+        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+          <form onSubmit={async (e) => {
+            e.preventDefault();
+            await handleButton(password);
+          }}>
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">Change Your Password</h1>
+            {message && (
+              <div className="text-green-600 font-semibold mb-4">{message}</div>
+            )}
+            <div className="space-y-4">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter new password"
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white font-bold py-2 rounded-md hover:opacity-90 transition"
+              >
+                Update Password
+              </button>
+            </div>
+          </form>
+        </div>
+
       </div>
-      </div>
-      </div>
-)}
+    </div>
+  );
+}

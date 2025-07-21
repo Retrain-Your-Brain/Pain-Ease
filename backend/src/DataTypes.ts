@@ -1,4 +1,4 @@
 export type ExercisePlannerResponse = {
-    videoUrl: string,
-    instructions: string
-}
+  videoUrl: string;
+  instructions: string;
+};
