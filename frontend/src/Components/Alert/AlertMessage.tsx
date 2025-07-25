@@ -18,7 +18,7 @@ export function DescriptionAlerts() {
             severity="error"
             key={index}
             onClose={() => handleClose(index)}
-            className="mt-50"
+            className="mt-80"
           >
             <AlertTitle>Error</AlertTitle>
             {message}

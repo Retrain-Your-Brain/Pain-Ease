@@ -36,7 +36,7 @@ export default function Private() {
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">
               <div className="flex justify-center items-center space-x-3">
-                <img src="/final.png" alt="Logo" className="h-20" />
+                <img src="/final.png" alt="Logo" className="h-30" />
               </div>
             </a>
           </div>

@@ -54,7 +54,7 @@ export default function Home() {
 
   return (
     <div className="bg-white">
-      <Private />
+    
      
       <div className="py-32 ">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center">

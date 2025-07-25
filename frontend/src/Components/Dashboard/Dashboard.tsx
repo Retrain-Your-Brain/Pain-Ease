@@ -28,7 +28,7 @@ export default function Dashboard() {
   return (
     <div className="absolute w-full top-0  left-0 max-h gap-x-10 h-auto">
       <div className="top-0 w-full bg-gradient-to-b from-purple-300 via-violet-200 to-white-100  flex justify-between items-center px-20 py-10 h-120">
-        <div className="w-1/2  ">
+        <div className="w-1/2 mt-40 ">
           <h1 className="text-5xl text-blue-900 font-bold text-left ">
             All - In - One{" "}
           </h1>
@@ -45,7 +45,7 @@ export default function Dashboard() {
           </button>
         </div>
 
-        <div>
+        <div className="mt-40">
           <img src="health.png" className="h-100 w-100" />
         </div>
       </div>
@@ -177,14 +177,14 @@ export default function Dashboard() {
 
   {/* Right Image */}
   <div className="w-1/2 flex justify-center">
-    <img src="laptop.png" alt="Reminder Feature Screenshot" className="max-w-full h-auto rounded-xl mt-28 ml-20" />
+    <img src="laptop.png" alt="Reminder Feature Screenshot" className="max-w-full h-100 rounded-xl mt-20 ml-20" />
   </div>
 </div>
  
 <div className="flex justify-between items-start px-20 pb-10">
 
 <div className="w-1/2 flex justify-center">
-    <img src="laptop.png" alt="Reminder Feature Screenshot" className="max-w-full h-auto rounded-xl mt-20 mr-20 " />
+    <img src="phone.png" alt="Reminder Feature Screenshot" className="max-w-full h-auto rounded-xl mt-20 mr-20 " />
   </div>
 
   {/* Left Feature Column */}

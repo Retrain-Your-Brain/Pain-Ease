@@ -47,7 +47,7 @@ export default function Login() {
   });
   return (
     <div>
-      <Public />
+     
  <DescriptionAlerts />
       <div className="mt-30 max-w-md mx-auto h-auto bg-white p-6 rounded-xl shadow-lg  border border-gray-200">
         <form onSubmit={formik.handleSubmit} className=" ">
