@@ -18,27 +18,59 @@ const PostControl = {
       res.status(500).json({ message: err.message });
     }
   },
-
+  
   all: async (req: Request, res: Response) => {
     try {
+      const userId = req.user?.id;
       const posts = await Post.find()
         .populate("author", "username email")
         .sort({ createdAt: -1 });
-      res.status(201).json(posts);
+
+        const enrichedPosts = posts.map((post) => {
+          const likedByUser = post.likes.some(
+            (id) => id.toString() === userId
+          );
+    
+          return {
+            ...post.toObject(),
+            likedByUser,
+            likes: {
+              count: post.likes.length,
+            },
+          };
+        });
+
+      res.status(201).json(enrichedPosts);
     } catch (err: any) {
       res.status(500).json({ message: err.message });
     }
+
   },
   myPost: async (req: Request, res: Response) => {
     try {
         const userId= req.user?.id
-        const {postId} = req.params
       const posts = await Post.find({author:userId}).sort({createdAt:-1})
         .populate("author", "username email")
-      res.status(201).json(posts);
+      
+    const enrichedPosts = posts.map((post) => {
+      const likedByUser = post.likes.some(
+        (id) => id.toString() === userId
+      );
+
+      return {
+        ...post.toObject(), 
+        likedByUser,
+        likes: {
+          count: post.likes.length,
+        },
+      };
+    });
+
+    res.status(200).json(enrichedPosts);
     } catch (err: any) {
       res.status(500).json({ message: err.message });
     }
+
   },
   like: async (req: Request, res: Response) => {
     try {
@@ -55,9 +87,14 @@ const PostControl = {
         }else{
             post.likes.push(objectUserId)
         }
-        await post.save(); 
+        await post.save();
+        
+        return res.status(200).json({
+          count: post.likes.length,
+          liked:!alreadyLiked,
+        })
     } catch (err: any) {
-      res.status(500).json({ message: err.message });
+      res.status(500).json({ message: err });
     }
   },
 };

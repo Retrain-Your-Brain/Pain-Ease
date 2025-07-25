@@ -36,7 +36,8 @@ app.use("/", userRouter);
 app.use("/", ReminderRouter);
 app.use("/", SymptomRouter);
 app.use("/", PostRouter);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use('/uploads', express.static( 'uploads'));
 startReminderEmailJob();
 
 

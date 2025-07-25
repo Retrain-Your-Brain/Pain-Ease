@@ -3,9 +3,9 @@ import isAuthenticated from "../src/middleware/isAuth";
 
 const express = require("express");
 
-const symptomRouter= express.Router()
+const symptomRouter = express.Router();
 
-symptomRouter.post('/add-symptom', isAuthenticated, SymptomControl.add)
-symptomRouter.get('/get-symptom',  isAuthenticated, SymptomControl.get)
+symptomRouter.post("/add-symptom", isAuthenticated, SymptomControl.add);
+symptomRouter.get("/get-symptom", isAuthenticated, SymptomControl.get);
 
-export default symptomRouter
+export default symptomRouter;

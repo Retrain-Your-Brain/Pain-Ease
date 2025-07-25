@@ -7,10 +7,9 @@ const symptomSchema = new mongoose.Schema({
   notes: { type: String, default: "" },
   water: Number,
   weight: Number,
-  suggestPlanChange:{ type: Boolean, default: false },
+  suggestPlanChange: { type: Boolean, default: false },
 });
 
 const Symptom = mongoose.model("Symptom", symptomSchema);
 
 export default Symptom;
-
