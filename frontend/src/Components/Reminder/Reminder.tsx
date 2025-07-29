@@ -66,7 +66,6 @@ export default function ValidationBehaviorView() {
 
     const isoString = combinedDateTime.toISOString();
     const token = localStorage.getItem("token");
-    console.log(token)
     try {
       const response = await axios.post(
         "http://localhost:5000/add-reminder",
@@ -79,7 +78,6 @@ export default function ValidationBehaviorView() {
           },
         }
       );
-
       if (response.status === 201) {
         alert("Reminder created successfully!");
         await loadReminders();
@@ -90,27 +88,28 @@ export default function ValidationBehaviorView() {
     }
   };
 
+
+
   React.useEffect(()=>{
-    const checkReminders=async()=>{
+    const checkReminders = async()=>{
 
-        const now=new Date().getTime()
-        for (const r of reminder) {
-            const reminderTime= new Date(r.reminderTime).getTime()
-            const timeDiff= reminderTime - now
-            if(!r.notified && timeDiff<=0 && timeDiff>-6000 ){
-                alert(`Reminder:${r.message}`)
-                await updateReminderAPI(r._id)  
-            }
-        }
-        loadReminders()
-    }
-
+      const now=new Date().getTime()
+      for (const r of reminder) {
+          const reminderTime= new Date(r.reminderTime).getTime()
+          const timeDiff= reminderTime - now
+          if(!r.notified && timeDiff<=0 && timeDiff>-6000 ){
+              alert(`Reminder:${r.message}`)
+              await updateReminderAPI(r._id)  
+          }
+      }
+      loadReminders()
+  }
+  
     checkReminders()
     const interval= setInterval(checkReminders,30000)
     return ()=>clearInterval(interval)
   },[reminder])
   
-
   return (
     <div className=" pt-50 ">
       <Private />

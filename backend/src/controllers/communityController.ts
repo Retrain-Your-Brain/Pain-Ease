@@ -18,7 +18,7 @@ const PostControl = {
       res.status(500).json({ message: err.message });
     }
   },
-  
+
   all: async (req: Request, res: Response) => {
     try {
       const userId = req.user?.id;
@@ -70,7 +70,6 @@ const PostControl = {
     } catch (err: any) {
       res.status(500).json({ message: err.message });
     }
-
   },
   like: async (req: Request, res: Response) => {
     try {
