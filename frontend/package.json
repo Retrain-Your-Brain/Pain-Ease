@@ -19,6 +19,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "framer-motion": "^12.23.5",
     "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.2.0",
     "@mui/material": "^7.2.0",
