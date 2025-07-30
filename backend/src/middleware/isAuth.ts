@@ -24,7 +24,6 @@ const isAuthenticated = async (req:Request, res:Response, next:NextFunction): Pr
   }
 
   const token = headerObj?.authorization?.split(" ")[1];
-  console.log(token);
   const decoded = jwt.verify(token, "navu") as JwtPayload;
 
   req.user = { id: decoded.id, username: decoded.username }; // Attach user info to request
@@ -32,7 +31,6 @@ const isAuthenticated = async (req:Request, res:Response, next:NextFunction): Pr
   next();
   }
   catch(err){
-    console.error(" Token verification failed:", err);
     res.status(401).json({ message: "Not authorized, token invalid" });
   }
 
