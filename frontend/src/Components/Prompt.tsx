@@ -23,7 +23,7 @@ const PromptComponent = () => {
         placeholder="Enter prompt"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        className="pl-10 w-50 pr-4 mt-60 py-2 w-full rounded-md border border-gray-300"
+        className="pl-10 pr-4 mt-60 py-2 w-full rounded-md border border-gray-300"
       />
       <button className="border border-gray-800 p-2 m-4 rounded" onClick={handleClick}>
         Send
