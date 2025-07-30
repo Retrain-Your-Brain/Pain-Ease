@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import userRouter from "./routes/UserRouter";
+import ReminderRouter from "./routes/reminderRouter";
 
 dotenv.config();
 
@@ -21,3 +22,4 @@ app.listen(PORT, () => {
 
 app.use(express.json());
 app.use("/", userRouter);
+app.use("/", ReminderRouter);
