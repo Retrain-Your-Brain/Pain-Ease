@@ -46,7 +46,6 @@ export default function Register() {
   });
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-white mt-30 max-h-screen w-full">
-      <Public />
       <DescriptionAlerts />
 
       <div className="flex justify-center items-center pt-16">

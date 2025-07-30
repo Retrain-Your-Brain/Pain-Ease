@@ -113,7 +113,6 @@ export default function ValidationBehaviorView() {
 
   return (
     <div className=" pt-50 ">
-      <Private />
       <div className="min-h-screen h-auto bg-gradient-to-br from-indigo-100 via-blue-100 to-cyan-100 p-10 relative">
         <motion.h1
           initial={{ y: -40, opacity: 0 }}

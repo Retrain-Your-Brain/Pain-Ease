@@ -10,6 +10,7 @@ import Profile from "./Components/Profile/Profile";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Private from "./Components/Navbar/PrivateNavbar";
 import Public from "./Components/Navbar/PublicNavbar";
+import ValidationBehaviorView from "./Components/Reminder/Reminder";
 
 
 function App() {
@@ -26,6 +27,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/prompt" element={<PromptComponent />} />
+          <Route path="/reminder" element={<ValidationBehaviorView />} />
+          
         </Routes>
       </BrowserRouter>
     </Provider>

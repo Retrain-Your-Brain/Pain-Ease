@@ -63,7 +63,7 @@ export default function Profile() {
 
   return (
     <div className="  bg-gradient-to-br from-blue-100 to-white pt-24 h-auto  -ml-30 -mr-30 w-screen mt-20 ">
-      <Private />
+     
       <DescriptionAlerts />
       <div className="max-w-3xl mx-auto space-y-12">
         {/* Account Info Section */}
