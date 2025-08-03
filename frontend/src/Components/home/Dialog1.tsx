@@ -4,14 +4,12 @@ import { useAppDispatch } from "../../store/store";
 import { addError } from "../../store/errorSlice";
 import axios from "axios";
 
+type Props = {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+};
 
-type Props={
-    isOpen:boolean,
-    setIsOpen:(open:boolean) => void,
-}
-
-export default function Dialog1({isOpen,setIsOpen}:Props) {
- 
+export default function Dialog1({ isOpen, setIsOpen }: Props) {
   const [success, setSuccess] = useState("");
   const [water, setWater] = useState("");
   const [painScale, setpainScale] = useState("");

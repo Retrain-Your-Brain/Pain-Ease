@@ -7,6 +7,7 @@ export const data = async ({ prompt }: { prompt: string }) => {
 
   return response.data;
 };
+
 export const registerApi = async ({
   username,
   email,

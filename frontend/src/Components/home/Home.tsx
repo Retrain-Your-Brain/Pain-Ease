@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Dialog1 from "./Dialog1";
 
 export default function Home() {
-
- const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/register");
@@ -58,11 +57,11 @@ export default function Home() {
         </div>
 
         {/* Modal */}
-       <Dialog1 isOpen={isOpen} setIsOpen={setIsOpen}/>
+        <Dialog1 isOpen={isOpen} setIsOpen={setIsOpen} />
         <div className=" -mx-20 max-w-screen p-6 mt-2 text-left bg-gradient-to-tr from-blue-500 to-teal-500 opacity-200 flex justify-evenly gap-x-5 py-20 ">
           <div className="">
             <h1 className="text-white text-5xl font-bold leading-tight mt-10">Personalized workout plan</h1>
-          
+
             <h1 className="text-white text-5xl font-bold leading-tight">for chronic pain</h1>
             <p className="mt-8 text-white text-lg">Have your plan customized by us.</p>
 
