@@ -1,39 +1,42 @@
 import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: {id:string,username:string};  // you can type it better, e.g. { id: string }
-    }
-  }
-}
 interface JwtPayload {
   id: string;
-  username:string;
+  username: string;
   iat: number;
   exp: number;
 }
 
-const jwt = require("jsonwebtoken");
-const isAuthenticated = async (req:Request, res:Response, next:NextFunction): Promise<void> => {
-  try{
-  const headerObj = req.headers;
-  if (!req.headers.authorization || !req.headers.authorization .startsWith("Bearer ")) {
-     res.status(401).json({ message: "Not authorized, no token provided" });
-     return 
-  }
+interface AuthenticatedRequest extends Request {
+  user?: {
+    id: string;
+    username: string;
+  };
+}
 
-  const token = headerObj?.authorization?.split(" ")[1];
-  const decoded = jwt.verify(token, "navu") as JwtPayload;
+const isAuthenticated = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const headerObj = req.headers;
+    if (!req.headers.authorization || !req.headers.authorization.startsWith("Bearer ")) {
+      res.status(401).json({ message: "Not authorized, no token provided" });
+      return;
+    }
 
-  req.user = { id: decoded.id, username: decoded.username }; // Attach user info to request
+    const token = headerObj?.authorization?.split(" ")[1];
+    if (!token) {
+      res.status(401).json({ message: "Not authorized, token missing" });
+      return;
+    }
 
-  next();
-  }
-  catch(err){
+    const decoded = jwt.verify(token, "navu") as unknown as JwtPayload;
+
+    req.user = { id: decoded.id, username: decoded.username }; // Attach user info to request
+
+    next();
+  } catch (err) {
     res.status(401).json({ message: "Not authorized, token invalid" });
   }
+};
 
-
-}
-export default isAuthenticated
+export default isAuthenticated;
