@@ -1,19 +1,57 @@
-import { useCallback, useState } from "react";
-import axios from "axios";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const PromptComponent = () => {
   const [input, setInput] = useState("");
+  const fetchInitialDataRef = useRef<boolean>(false);
 
   const handleClick = useCallback(async () => {
     try {
-      await axios.post("http://localhost:5000/prompt", {
-        prompt: input,
+      const res = await fetch("http://localhost:5050/generate-exercise-plan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: input }),
       });
-      setInput("");
-    } catch (error) {
-      console.error("Error sending prompt:", error);
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      console.log("Exercise Plan:", data);
+    } catch (err) {
+      console.error("Fetch failed:", err);
     }
   }, [input]);
+
+  useEffect(() => {
+    if (!fetchInitialDataRef.current) {
+      fetchInitialDataRef.current = true;
+    
+      const fetchSampleData = async () => {
+        try {
+          const res = await fetch("http://localhost:5050/example-back-pain-response", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+          }
+    
+          const data = await res.json();
+          console.log("Back Pain Exercise Plan:", data);
+        } catch (err) {
+          console.error("Fetch failed:", err);
+        }
+      }
+      
+      fetchSampleData();
+    }
+  }, []);
 
   return (
     <div>

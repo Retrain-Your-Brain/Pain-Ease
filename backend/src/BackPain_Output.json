@@ -1,0 +1,34 @@
+{
+    "exercises": [
+        {
+            "exerciseName": "Cat-Cow Stretch",
+            "youtubeLink": "https://www.youtube.com/watch?v=kqnua4rHVVA",
+            "instructions": "Start on your hands and knees in a tabletop position. Inhale as you arch your back, dropping your belly towards the mat, and lift your head and tailbone upwards (Cow). Exhale as you round your spine, tucking your chin to your chest and tailbone under (Cat).",
+            "frequency": "Perform for 1-2 minutes, twice daily."
+        },
+        {
+            "exerciseName": "Child's Pose",
+            "youtubeLink": "https://www.youtube.com/watch?v=xlk9mfpK3fA",
+            "instructions": "Start on your hands and knees, then sit back on your heels, extending your arms forward and resting your forehead on the floor. Breathe deeply and relax your back.",
+            "frequency": "Hold for 1-3 minutes, once daily."
+        },
+        {
+            "exerciseName": "Pelvic Tilts",
+            "youtubeLink": "https://www.youtube.com/watch?v=2aBTehlSc3s",
+            "instructions": "Lie on your back with knees bent and feet flat on the floor. Flatten your back against the floor by tightening your abdominal muscles and tilting your pelvis up slightly. Hold for a few seconds, then release.",
+            "frequency": "Do 10-15 repetitions, twice daily."
+        },
+        {
+            "exerciseName": "Knee-to-Chest Stretch",
+            "youtubeLink": "https://www.youtube.com/watch?v=3ek0Y2hojxA",
+            "instructions": "Lie on your back with your knees bent. Bring one knee towards your chest, keeping the other foot flat on the floor. Hold the knee with both hands and gently pull it closer to your chest. Switch legs.",
+            "frequency": "Hold each stretch for 15-30 seconds, repeat 2-3 times per leg, once daily."
+        },
+        {
+            "exerciseName": "Lumbar Rotation Stretch",
+            "youtubeLink": "https://www.youtube.com/watch?v=T3d7CjQ2Bd4",
+            "instructions": "Lie on your back with knees bent and feet flat on the floor. Keeping your shoulders on the ground, gently rotate your knees to one side, holding the position before switching sides.",
+            "frequency": "Hold each side for 10-20 seconds, repeat 3-5 times per side, once daily."
+        }
+    ]
+}
