@@ -6,7 +6,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: "Customize Plan", href: "#" },
+  { name: "Customize Plan", href: "/exercisePlan" },
   { name: "Track Progress", href: "#" },
   { name: "Online Community", href: "#" },
   { name: "Rewards", href: "#" },

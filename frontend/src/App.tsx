@@ -3,7 +3,6 @@ import "./App.css";
 import Home from "./Components/home/Home";
 import PromptComponent from "./Components/Prompt";
 import { store } from "./store/store";
-import { DescriptionAlerts } from "./Components/Alert/AlertMessage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./Components/Register/Register";
 
@@ -14,9 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
-          <PromptComponent />
-
-          <DescriptionAlerts />
+          <Route path="/exercisePlan" element={<PromptComponent />} />
         </Routes>
       </Router>
     </Provider>
