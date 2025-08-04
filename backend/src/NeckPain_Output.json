@@ -1,0 +1,34 @@
+{
+    "exercises": [
+        {
+            "exerciseName": "Chin Tucks",
+            "youtubeLink": "https://www.youtube.com/watch?v=2EJ6n0lLkV8",
+            "instructions": "Sit or stand with your back straight. Pull your chin straight back, as if making a double chin. Hold for 5 seconds, then relax.",
+            "frequency": "Perform 10 repetitions, 3 times a day."
+        },
+        {
+            "exerciseName": "Neck Stretch",
+            "youtubeLink": "https://www.youtube.com/watch?v=5NfrspTBGuc",
+            "instructions": "Sit or stand with your back straight. Slowly tilt your head to one side, bringing your ear toward your shoulder. Hold for 15-30 seconds, then switch sides.",
+            "frequency": "Perform 3 repetitions per side, 2 times a day."
+        },
+        {
+            "exerciseName": "Shoulder Blade Squeeze",
+            "youtubeLink": "https://www.youtube.com/watch?v=7lUo2aE3GzY",
+            "instructions": "Sit or stand with your arms at your sides. Squeeze your shoulder blades together and hold for 5 seconds, then relax.",
+            "frequency": "Perform 10 repetitions, 3 times a day."
+        },
+        {
+            "exerciseName": "Upper Trapezius Stretch",
+            "youtubeLink": "https://www.youtube.com/watch?v=uLxTf7K4Gxs",
+            "instructions": "Sit on your hand to stabilize your shoulder. Tilt your head to the opposite side and slightly forward. Hold the stretch for 15-30 seconds.",
+            "frequency": "Perform 3 repetitions per side, 2 times a day."
+        },
+        {
+            "exerciseName": "Levator Scapulae Stretch",
+            "youtubeLink": "https://www.youtube.com/watch?v=RzayD4twnHk",
+            "instructions": "Sit or stand and grasp the back of your head. Gently pull your head diagonally towards your armpit. Hold for 15-30 seconds.",
+            "frequency": "Perform 3 repetitions per side, 2 times a day."
+        }
+    ]
+}
