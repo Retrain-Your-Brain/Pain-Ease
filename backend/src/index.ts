@@ -1,16 +1,25 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
+import userRouter from "./routes/UserRouter";
 import OpenAI from "openai";
 import { z } from "zod";
 import dotenv from "dotenv";
-import SampleBackPainOutput  from './BackPain_Output.json';
-import SampleNeckPainOutput from './NeckPain_Output.json';
+import SampleBackPainOutput from "./BackPain_Output.json";
+import SampleNeckPainOutput from "./NeckPain_Output.json";
 
-dotenv.config(); // ✅ Load .env for local dev
+dotenv.config();
 
+const url = process.env.URL || "";
 const app = express();
+const mongoose = require("mongoose");
 app.use(cors());
 app.use(express.json());
+
+mongoose
+  .connect(url)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err: any) => console.log(err));
+
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -31,6 +40,7 @@ const ExercisePlanSchema = z.object({
   exercises: z.array(ExerciseSchema),
 });
 
+app.use("/", userRouter);
 app.post("/generate-exercise-plan", async (req: Request, res: Response): Promise<void> => {
   try {
     const { prompt } = req.body;
