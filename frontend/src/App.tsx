@@ -1,5 +1,4 @@
 import { Provider } from "react-redux";
-import "./App.css";
 import Home from "./Components/home/Home";
 import PromptComponent from "./Components/Prompt";
 import { store } from "./store/store";
