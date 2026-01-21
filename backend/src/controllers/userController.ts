@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import User from "../model/user";
+import User from "../models/user";
 const bcrypt = require("bcryptjs");
 import jwt from "jsonwebtoken";
 
@@ -73,7 +73,9 @@ const UserControl = {
       const { newPassword } = req.body;
       const user = await User.findById(req.user?.id);
       if (!req.user?.id) {
-        return res.status(401).json({ message: "Unauthorized. User ID missing." });
+        return res
+          .status(401)
+          .json({ message: "Unauthorized. User ID missing." });
       }
       if (!newPassword) {
         return res.status(400).json({ message: "New password is required." });

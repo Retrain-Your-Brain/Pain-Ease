@@ -24,7 +24,7 @@ const isAuthenticated = async (req: AuthenticatedRequest, res: Response, next: N
     }
 
     const token = headerObj?.authorization?.split(" ")[1];
-    if (!token) {
+    if (!token) { 
       res.status(401).json({ message: "Not authorized, token missing" });
       return;
     }
@@ -32,7 +32,6 @@ const isAuthenticated = async (req: AuthenticatedRequest, res: Response, next: N
     const decoded = jwt.verify(token, "navu") as unknown as JwtPayload;
 
     req.user = { id: decoded.id, username: decoded.username }; // Attach user info to request
-
     next();
   } catch (err) {
     res.status(401).json({ message: "Not authorized, token invalid" });

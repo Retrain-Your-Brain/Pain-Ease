@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const data = async ({ prompt }: { prompt: string }) => {
-  const response = await axios.post("http://localhost:5000/prompt", {
+  const response = await axios.post("http://localhost:5050/prompt", {
     prompt,
   });
 
@@ -17,7 +17,7 @@ export const registerApi = async ({
   email: string;
   password: string;
 }) => {
-  const response = await axios.post("http://localhost:5000/register", {
+  const response = await axios.post("http://localhost:5050/register", {
     username,
     email,
     password,
@@ -27,7 +27,7 @@ export const registerApi = async ({
 
 export const LoginAPI = async ({ email, password }: { email: string; password: string }) => {
   {
-    const response = await axios.post("http://localhost:5000/login", {
+    const response = await axios.post("http://localhost:5050/login", {
       email,
       password,
     });
@@ -40,7 +40,7 @@ export const updateAPI = async ({ username, email }: { email: string; username: 
   const token = localStorage.getItem("token");
   {
     const response = await axios.post(
-      "http://localhost:5000/update",
+      "http://localhost:5050/update",
       {
         email,
         username,
@@ -60,7 +60,7 @@ export const passwordAPI = async ({ password }: { password: string }) => {
   const token = localStorage.getItem("token");
   {
     const response = await axios.post(
-      "http://localhost:5000/password",
+      "http://localhost:5050/password",
       {
         password,
       },

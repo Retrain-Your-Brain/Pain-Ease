@@ -1,33 +1,90 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}
 import userRouter from "./routes/UserRouter";
 import OpenAI from "openai";
 import { z } from "zod";
 import dotenv from "dotenv";
 import SampleBackPainOutput from "./BackPain_Output.json";
 import SampleNeckPainOutput from "./NeckPain_Output.json";
+import PostRouter from "./routes/communityRouter";
+import { ExercisePlannerResponse } from "./DataTypes";
+import ReminderRouter from "./routes/reminderRouter";
+import SymptomRouter from "./routes/symptomRouter";
+import isAuthenticated from "./middleware/isAuth";
+
 
 dotenv.config();
 
 const url = process.env.URL || "";
+console.log(`The url is ${url}`);
+
 const app = express();
 const mongoose = require("mongoose");
 app.use(cors());
+
 app.use(express.json());
+app.use("/", userRouter);
+app.use("/", ReminderRouter);
+app.use("/", SymptomRouter);
+app.use("/", PostRouter);
+
 
 mongoose
   .connect(url)
   .then(() => console.log("MongoDB connected"))
   .catch((err: any) => console.log(err));
 
+const PORT = process.env.PORT || 5050;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+app.post("/prompt", (req: Request, res: Response) => {
+  // To-do: Make call to ChatGpt when implemented.
+  res.send({
+    videoUrl: 'https://www.youtube.com/watch?v=kqnua4rHVVA',
+    instructions: `Cat-Cow Stretch Instructions
+        Starting Position:
+        - Begin on your hands and knees (tabletop position) on a yoga mat.
+        - Wrists under shoulders, knees under hips, back flat and neutral.
+        - Neck in line with spine, gaze at the floor.
+        Cow Pose (Inhale):
+        - Inhale deeply through your nose.
+        - Arch your back: drop your belly toward the mat.
+        - Lift your tailbone and chest, gaze slightly upward.
+        - Roll shoulders back and away from your ears.
+        Cat Pose (Exhale):
+        - Exhale slowly through nose or mouth.
+        - Round your back: draw belly button toward spine.
+        - Tuck your tailbone under.
+        - Tuck your chin to chest, let head relax down.
+        Repeat:
+        - Flow slowly between Cat and Cow with your breath.
+        - Repeat 10-15 times or for 1-2 minutes.
+        Tips & Precautions:
+        - Move slowly, no sudden movements.
+        - Only move within a pain-free range.
+        - Use padding for knees if needed.
+        - Consult your doctor or PT if you have serious back issues.
+        Be gentle and mindful. Happy stretching!`
+  } as ExercisePlannerResponse).json();
+})
+
+
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 if (!process.env.OPENAI_API_KEY) {
   console.error("❌ OPENAI_API_KEY not set");
   process.exit(1);
 }
-
 // Zod schema
 const ExerciseSchema = z.object({
   exerciseName: z.string(),
@@ -35,12 +92,19 @@ const ExerciseSchema = z.object({
   instructions: z.string(),
   frequency: z.string(),
 });
-
 const ExercisePlanSchema = z.object({
   exercises: z.array(ExerciseSchema),
 });
 
-app.use("/", userRouter);
+
+app.use('/uploads', express.static( 'uploads'));
+
+app.get("/test-auth", isAuthenticated, (req: Request, res: Response) => {
+  res.json({ message: "Auth successful", user: req.user });
+});
+
+
+
 app.post("/generate-exercise-plan", async (req: Request, res: Response): Promise<void> => {
   try {
     const { prompt } = req.body;
@@ -109,5 +173,5 @@ app.get("/example-neck-pain-response", async (req: Request, res: Response): Prom
   return Promise.resolve();
 });
 
-const PORT = process.env.PORT || 5050;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+
