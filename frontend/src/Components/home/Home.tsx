@@ -1,97 +1,16 @@
-"use client";
-
 import { useState } from "react";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-
-const navigation = [
-  { name: "Customize Plan", href: "/exercisePlan" },
-  { name: "Track Progress", href: "#" },
-  { name: "Online Community", href: "#" },
-  { name: "Rewards", href: "#" },
-];
+import Dialog1 from "./Dialog1";
 
 export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/register");
   };
+
   return (
     <div className="bg-white">
-      <header className="absolute inset-x-0 top-0 z-50">
-        <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
-          <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
-              <div className="flex justify-center items-center space-x-3">
-                <img src="/final.png" alt="Logo" className="h-20" />
-              </div>
-            </a>
-          </div>
-          <div className="flex lg:hidden">
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            >
-              <Bars3Icon aria-hidden="true" className="size-6" />
-            </button>
-          </div>
-          <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-900">
-                {item.name}
-              </a>
-            ))}
-          </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm/6 font-semibold text-gray-900">
-              Log in
-            </a>
-          </div>
-        </nav>
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-          <div className="fixed inset-0 z-50" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5"></a>
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(false)}
-                className="-m-2.5 rounded-md p-2.5 text-gray-700"
-              >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon aria-hidden="true" className="size-6" />
-              </button>
-            </div>
-            <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-                <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    Log in
-                  </a>
-                </div>
-              </div>
-            </div>
-          </DialogPanel>
-        </Dialog>
-      </header>
-
       <div className="py-32 ">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center">
           <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
@@ -124,11 +43,28 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="mt-24 text-center">
+          <h1 className="text-3xl font-semibold text-gray-800">Daily Insights</h1>
+          <div className="bg-gray-50 rounded-xl shadow-md p-6 mt-6 w-full max-w-md mx-auto">
+            <p className="text-lg font-medium text-gray-700 mb-4">Log your Symptoms</p>
+            <button
+              className="bg-pink-500 text-white rounded-full w-10 h-10 text-2xl font-bold hover:bg-pink-400"
+              onClick={() => setIsOpen(true)}
+            >
+              +
+            </button>
+          </div>
+        </div>
+
+        {/* Modal */}
+        <Dialog1 isOpen={isOpen} setIsOpen={setIsOpen} />
         <div className=" -mx-20 max-w-screen p-6 mt-2 text-left bg-gradient-to-tr from-blue-500 to-teal-500 opacity-200 flex justify-evenly gap-x-5 py-20 ">
           <div className="">
             <h1 className="text-white text-5xl font-bold leading-tight mt-10">Personalized workout plan</h1>
+
             <h1 className="text-white text-5xl font-bold leading-tight">for chronic pain</h1>
             <p className="mt-8 text-white text-lg">Have your plan customized by us.</p>
+
             <button
               className="mt-10 px-5 py-2 bg-white text-blue-700 font-semibold rounded shadow hover:bg-gray-100"
               onClick={handleClick}
@@ -155,8 +91,6 @@ export default function Home() {
               <img src="/track.png" alt="Track Progress" className="h-60 object-contain" />
             </div>
           </div>
-
-          {/* Right Box */}
 
           <div className="w-3/2 -mr-20 p-10 bg-gradient-to-tr from-pink-500 to-blue-200 text-center ">
             <h1 className="text-black text-4xl font-thin leading-tight mt-10">Online Community</h1>

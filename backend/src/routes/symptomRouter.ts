@@ -1,5 +1,5 @@
-import SymptomControl from "../src/controllers/symptomController";
-import isAuthenticated from "../src/middleware/isAuth";
+import SymptomControl from "../controllers/symptomController";
+import isAuthenticated from "../middleware/isAuth";
 
 const express = require("express");
 

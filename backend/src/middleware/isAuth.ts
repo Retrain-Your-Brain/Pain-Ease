@@ -8,19 +8,14 @@ interface JwtPayload {
   exp: number;
 }
 
-declare global{
-  namespace Express{
-    interface Request{
-      user?: {
-        id: string;
-        username: string;
-      }
-    }
-  }
-};
+interface AuthenticatedRequest extends Request {
+  user?: {
+    id: string;
+    username: string;
+  };
+}
 
-
-const isAuthenticated = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const isAuthenticated = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const headerObj = req.headers;
     if (!req.headers.authorization || !req.headers.authorization.startsWith("Bearer ")) {

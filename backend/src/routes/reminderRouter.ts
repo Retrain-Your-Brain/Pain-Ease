@@ -1,8 +1,8 @@
 const express = require("express");
 
-import ReminderControl from "../src/controllers/reminderController";
+import ReminderControl from "../controllers/reminderController";
 
-import isAuthenticated from "../src/middleware/isAuth";
+import isAuthenticated from "../middleware/isAuth";
 
 const ReminderRouter = express.Router();
 ReminderRouter.post("/add-reminder", isAuthenticated, ReminderControl.add);

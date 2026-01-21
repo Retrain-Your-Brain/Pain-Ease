@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import User from "../../model/user";
+import User from "../models/user";
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const UserControl = {
   register: async (req: Request, res: Response) => {
@@ -34,11 +34,10 @@ const UserControl = {
         username: userCreated.username,
         password: userCreated.password,
       });
-    } catch (error: any) {
-      console.error("Register error:", error);
-      res
-        .status(500)
-        .json({ message: error.message || "Internal server error" });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json({ message: error.message || "Internal server error" });
+      }
     }
   },
 
@@ -56,17 +55,17 @@ const UserControl = {
       const token = jwt.sign({ id: user._id }, "navu", {
         expiresIn: "150y",
       });
-      console.log(token);
+
       res.json({
         message: "login successful",
-        _id: user._id,
+        id: user.id,
         token,
         user,
       });
-    } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: error.message || "Internal server error" });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json({ message: error.message || "Internal server error" });
+      }
     }
   },
   changePassword: async (req: Request, res: Response) => {
@@ -74,9 +73,7 @@ const UserControl = {
       const { newPassword } = req.body;
       const user = await User.findById(req.user?.id);
       if (!req.user?.id) {
-        return res
-          .status(401)
-          .json({ message: "Unauthorized. User ID missing." });
+        return res.status(401).json({ message: "Unauthorized. User ID missing." });
       }
       if (!newPassword) {
         return res.status(400).json({ message: "New password is required." });
@@ -92,10 +89,10 @@ const UserControl = {
       res.json({
         message: "Password changed successfully", // Return success message
       });
-    } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: error.message || "Internal server error" });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json({ message: error.message || "Internal server error" });
+      }
     }
   },
 
@@ -108,13 +105,13 @@ const UserControl = {
       const updatedUser = await User.findByIdAndUpdate(
         userId,
         { email, username }, // Update email and username
-        { new: true } // Return the updated user
+        { new: true }, // Return the updated user
       );
       res.json({ message: "Profile updated successfully", updatedUser });
-    } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: error.message || "Internal server error" });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json({ message: error.message || "Internal server error" });
+      }
     }
   },
 };

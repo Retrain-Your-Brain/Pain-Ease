@@ -1,7 +1,7 @@
-import PostControl from "../src/controllers/communityController";
-import ReplyControl from "../src/controllers/replyController";
-import upload from "../src/middleware/image";
-import isAuthenticated from "../src/middleware/isAuth";
+import PostControl from "../controllers/communityController";
+import ReplyControl from "../controllers/replyController";
+import upload from "../middleware/image";
+import isAuthenticated from "../middleware/isAuth";
 
 const express = require("express");
 
