@@ -28,7 +28,7 @@ const PromptComponent = () => {
   useEffect(() => {
     if (!fetchInitialDataRef.current) {
       fetchInitialDataRef.current = true;
-    
+
       const fetchSampleData = async () => {
         try {
           const res = await fetch("http://localhost:5050/example-back-pain-response", {
@@ -41,14 +41,14 @@ const PromptComponent = () => {
           if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
           }
-    
+
           const data = await res.json();
           console.log("Back Pain Exercise Plan:", data);
         } catch (err) {
           console.error("Fetch failed:", err);
         }
-      }
-      
+      };
+
       fetchSampleData();
     }
   }, []);

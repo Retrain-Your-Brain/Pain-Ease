@@ -73,9 +73,7 @@ const UserControl = {
       const { newPassword } = req.body;
       const user = await User.findById(req.user?.id);
       if (!req.user?.id) {
-        return res
-          .status(401)
-          .json({ message: "Unauthorized. User ID missing." });
+        return res.status(401).json({ message: "Unauthorized. User ID missing." });
       }
       if (!newPassword) {
         return res.status(400).json({ message: "New password is required." });
@@ -107,7 +105,7 @@ const UserControl = {
       const updatedUser = await User.findByIdAndUpdate(
         userId,
         { email, username }, // Update email and username
-        { new: true } // Return the updated user
+        { new: true }, // Return the updated user
       );
       res.json({ message: "Profile updated successfully", updatedUser });
     } catch (error: unknown) {

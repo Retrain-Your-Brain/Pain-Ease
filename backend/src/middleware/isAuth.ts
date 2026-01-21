@@ -24,7 +24,7 @@ const isAuthenticated = async (req: AuthenticatedRequest, res: Response, next: N
     }
 
     const token = headerObj?.authorization?.split(" ")[1];
-    if (!token) { 
+    if (!token) {
       res.status(401).json({ message: "Not authorized, token missing" });
       return;
     }

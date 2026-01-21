@@ -8,7 +8,6 @@ export const AppSlice = createSlice({
   initialState: getAppState(),
   reducers: {
     changeSideMenu: (state, action: PayloadAction<keyof typeof SideMenuOptions>) => {
-      console.log(action);
       state.sideMenuOption = action.payload;
     },
   },

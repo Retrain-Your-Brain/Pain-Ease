@@ -1,13 +1,5 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, {  Request, Response } from "express";
 import cors from "cors";
-
-declare global {
-  namespace Express {
-    interface Request {
-      user?: any;
-    }
-  }
-}
 import userRouter from "./routes/UserRouter";
 import OpenAI from "openai";
 import { z } from "zod";
@@ -20,6 +12,13 @@ import ReminderRouter from "./routes/reminderRouter";
 import SymptomRouter from "./routes/symptomRouter";
 import isAuthenticated from "./middleware/isAuth";
 
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}
 
 dotenv.config();
 
@@ -28,6 +27,12 @@ console.log(`The url is ${url}`);
 
 const app = express();
 const mongoose = require("mongoose");
+mongoose
+  .connect(url)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err: any) => console.log(err));
+
+
 app.use(cors());
 
 app.use(express.json());
@@ -37,21 +42,14 @@ app.use("/", SymptomRouter);
 app.use("/", PostRouter);
 
 
-mongoose
-  .connect(url)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err: any) => console.log(err));
 
-const PORT = process.env.PORT || 5050;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
 
 app.post("/prompt", (req: Request, res: Response) => {
   // To-do: Make call to ChatGpt when implemented.
-  res.send({
-    videoUrl: 'https://www.youtube.com/watch?v=kqnua4rHVVA',
-    instructions: `Cat-Cow Stretch Instructions
+  res
+    .send({
+      videoUrl: "https://www.youtube.com/watch?v=kqnua4rHVVA",
+      instructions: `Cat-Cow Stretch Instructions
         Starting Position:
         - Begin on your hands and knees (tabletop position) on a yoga mat.
         - Wrists under shoulders, knees under hips, back flat and neutral.
@@ -74,17 +72,16 @@ app.post("/prompt", (req: Request, res: Response) => {
         - Only move within a pain-free range.
         - Use padding for knees if needed.
         - Consult your doctor or PT if you have serious back issues.
-        Be gentle and mindful. Happy stretching!`
-  } as ExercisePlannerResponse).json();
-})
-
-
+        Be gentle and mindful. Happy stretching!`,
+    } as ExercisePlannerResponse)
+    .json();
+});
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 if (!process.env.OPENAI_API_KEY) {
   console.error("❌ OPENAI_API_KEY not set");
   process.exit(1);
-}
+} 
 // Zod schema
 const ExerciseSchema = z.object({
   exerciseName: z.string(),
@@ -96,14 +93,11 @@ const ExercisePlanSchema = z.object({
   exercises: z.array(ExerciseSchema),
 });
 
-
-app.use('/uploads', express.static( 'uploads'));
+app.use("/uploads", express.static("uploads"));
 
 app.get("/test-auth", isAuthenticated, (req: Request, res: Response) => {
   res.json({ message: "Auth successful", user: req.user });
 });
-
-
 
 app.post("/generate-exercise-plan", async (req: Request, res: Response): Promise<void> => {
   try {
@@ -173,5 +167,7 @@ app.get("/example-neck-pain-response", async (req: Request, res: Response): Prom
   return Promise.resolve();
 });
 
-
-
+const PORT = process.env.PORT || 5050;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
